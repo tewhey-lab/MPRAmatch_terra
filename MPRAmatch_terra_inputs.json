@@ -1,0 +1,22 @@
+{
+  "MPRAmatch.reference_fasta": "File",
+  "MPRAmatch.read_b": "File",
+  "MPRAmatch.frag_len": "Int? (optional, default = 274)",
+  "MPRAmatch.thread": "Int? (optional, default = 30)",
+  "MPRAmatch.docker_tag": "String? (optional, default = \"latest\")",
+  "MPRAmatch.attributes": "File? (optional)",
+  "MPRAmatch.read_a": "File",
+  "MPRAmatch.enh_min": "Int? (optional, default = 50)",
+  "MPRAmatch.oligo_link": "String? (optional, default = \"AGTG\")",
+  "MPRAmatch.seq_min": "Int? (optional, default = 100)",
+  "MPRAmatch.read_len": "Int? (optional, default = 250)",
+  "MPRAmatch.barcode_orientation": "Int? (optional, default = 2)",
+  "MPRAmatch.out_directory": "String",
+  "MPRAmatch.mem": "Int? (optional, default = 30)",
+  "MPRAmatch.end_oligo_link": "String? (optional, default = \"CGTC\")",
+  "MPRAmatch.enh_max": "Int? (optional, default = 210)",
+  "MPRAmatch.barcode_link": "String? (optional, default = \"TCTAGA\")",
+  "MPRAmatch.bc_len": "Int? (optional, default = 20)",
+  "MPRAmatch.id_out": "String"
+}
+
