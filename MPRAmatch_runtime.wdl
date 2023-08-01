@@ -16,7 +16,7 @@ workflow MPRAmatch {
   Int? enh_max = 210 #Maximum acceptable length for an oligo
   Int? bc_len = 20 #Length of barcodes used for project
   String? docker_tag = "latest" #String of the directory relative to the WDL where the other required scripts live
-  String out_directory #String of the directory that all files will be copied to
+  #String out_directory #String of the directory that all files will be copied to
   String id_out #Project identifier - all files will have this as the prefix for their name
   String? barcode_link = "TCTAGA" #6 base sequence on the barcode end of the link between the barcode and oligo - orientation barcode to oligo
   String? oligo_link = "AGTG" #4 base sequence on the oligo end of the link between the barcode and oligo - orientation barcode to oligo
@@ -107,23 +107,23 @@ workflow MPRAmatch {
                     docker_tag=docker_tag,
                     id_out=id_out
               }
-  call relocate { input:
-                    flashed=Flash.out,
-                    matched=Pull_Barcodes.out1,
-                    rejected=Pull_Barcodes.out2,
-                    organized_fasta=Rearrange.out,
-                    sam_file=MiniMap.out3,
-                    map_log=MiniMap.out2,
-                    MPRA_out=SAM2MPRA.out,
-                    sorted=Sort.out,
-                    counted=Ct_Seq.out,
-                    parsed=Parse.out_parsed,
-                    plothist=Parse.out_hist,
-                    preseq_hist=preseq.hist,
-                    preseq_res=preseq.res,
-                    qc_plot=qc_plot_t.plots,
-                    out_directory=out_directory
-                  }
+  #call relocate { input:
+  #                  flashed=Flash.out,
+  #                  matched=Pull_Barcodes.out1,
+  #                  rejected=Pull_Barcodes.out2,
+  #                  organized_fasta=Rearrange.out,
+  #                  sam_file=MiniMap.out3,
+  #                  map_log=MiniMap.out2,
+  #                  MPRA_out=SAM2MPRA.out,
+  #                  sorted=Sort.out,
+  #                  counted=Ct_Seq.out,
+  #                  parsed=Parse.out_parsed,
+  #                  plothist=Parse.out_hist,
+  #                  preseq_hist=preseq.hist,
+  #                  preseq_res=preseq.res,
+  #                  qc_plot=qc_plot_t.plots,
+  #                  out_directory=out_directory
+  #                }
   }
 
 task Flash {
@@ -323,23 +323,23 @@ task preseq {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     }
  }
-task relocate{
- File flashed
- File matched
- File rejected
- File organized_fasta
- File sam_file
- File map_log
- File MPRA_out
- File sorted
- File counted
- File parsed
- File plothist
- File preseq_hist
- File preseq_res
- File qc_plot
- String out_directory
- command {
-     mv ${flashed} ${matched} ${rejected} ${organized_fasta} ${sam_file} ${map_log} ${MPRA_out} ${sorted} ${counted} ${parsed} ${plothist} ${preseq_hist} ${preseq_res} ${qc_plot} ${out_directory}
-   }
- }
+#task relocate{
+# File flashed
+# File matched
+# File rejected
+# File organized_fasta
+# File sam_file
+# File map_log
+# File MPRA_out
+# File sorted
+# File counted
+# File parsed
+# File plothist
+# File preseq_hist
+# File preseq_res
+# File qc_plot
+# String out_directory
+# command {
+#     mv ${flashed} ${matched} ${rejected} ${organized_fasta} ${sam_file} ${map_log} ${MPRA_out} ${sorted} ${counted} ${parsed} ${plothist} ${preseq_hist} ${preseq_res} ${qc_plot} ${out_directory}
+#   }
+# }
