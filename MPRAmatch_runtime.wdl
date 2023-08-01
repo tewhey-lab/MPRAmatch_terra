@@ -143,6 +143,8 @@ task Flash {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task Pull_Barcodes {
@@ -167,6 +169,8 @@ task Pull_Barcodes {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task Rearrange {
@@ -183,6 +187,8 @@ task Rearrange {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task MiniMap {
@@ -203,6 +209,8 @@ task MiniMap {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task SAM2MPRA {
@@ -218,6 +226,8 @@ task SAM2MPRA {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task Sort {
@@ -233,6 +243,8 @@ task Sort {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task Ct_Seq {
@@ -248,6 +260,8 @@ task Ct_Seq {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task Parse {
@@ -266,6 +280,8 @@ task Parse {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 
@@ -286,6 +302,8 @@ task Parse_sat_mut {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task qc_plot_t {
@@ -304,6 +322,8 @@ task qc_plot_t {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
   }
 task preseq {
@@ -321,6 +341,8 @@ task preseq {
    }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
+    memory: "3000 MB"
+    disk: "local-disk 500 HDD"
     }
  }
 #task relocate{
