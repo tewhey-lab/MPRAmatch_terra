@@ -143,8 +143,8 @@ task Flash {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
-    memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    memory: "30000 MB"
+    disk: "local-disk 600 HDD"
     }
   }
 task Pull_Barcodes {
