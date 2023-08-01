@@ -11,7 +11,6 @@
   "MPRAmatch.seq_min": "Int? (optional, default = 100)",
   "MPRAmatch.read_len": "Int? (optional, default = 250)",
   "MPRAmatch.barcode_orientation": "Int? (optional, default = 2)",
-  "MPRAmatch.out_directory": "String",
   "MPRAmatch.mem": "Int? (optional, default = 30)",
   "MPRAmatch.end_oligo_link": "String? (optional, default = \"CGTC\")",
   "MPRAmatch.enh_max": "Int? (optional, default = 210)",
