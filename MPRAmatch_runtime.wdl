@@ -144,6 +144,7 @@ task Flash {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "80000 MB"
+    cpu: ${flash_thread} + 2
     disk: "local-disk 700 HDD"
     }
   }
@@ -210,6 +211,7 @@ task MiniMap {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
+    cpu: ${map_thread} + 2
     disk: "local-disk 500 HDD"
     }
   }
