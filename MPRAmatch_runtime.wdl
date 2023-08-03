@@ -128,13 +128,17 @@ workflow MPRAmatch {
 
 task Flash {
   # Flashing raw fastq files together
-  File read_a: {localization_optional: true}
-  File read_b: {localization_optional: true}
+  File read_a
+  File read_b
   Int read_len
   Int frag_len
   Int flash_thread
   String id_out
   String docker_tag
+  parameter_meta {
+    read_a: {localization_optional: true}
+    read_b: {localization_optional: true}
+  }
   command {
     flash2 -r ${read_len} -f ${frag_len} -s 25 -o ${id_out}.merged -t ${flash_thread} ${read_a} ${read_b}
     }
