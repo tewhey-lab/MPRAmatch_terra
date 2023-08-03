@@ -128,8 +128,8 @@ workflow MPRAmatch {
 
 task Flash {
   # Flashing raw fastq files together
-  File read_a {localization_optional: true}
-  File read_b {localization_optional: true}
+  File read_a: {localization_optional: true}
+  File read_b: {localization_optional: true}
   Int read_len
   Int frag_len
   Int flash_thread
