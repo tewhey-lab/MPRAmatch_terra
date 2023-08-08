@@ -1,5 +1,5 @@
 # Pipeline for matching barcodes and oligos for MPRA data
-# output of the Parse task should be used as the input for the ReplicateCount pipeline
+# output of the Parse task should be used as the input for the MPRAcount pipeline
 
 workflow MPRAmatch {
   File read_a #R1 fastq
