@@ -139,7 +139,7 @@ task Flash {
     flash2 -z -r ${read_len} -f ${frag_len} -s 25 -o ${id_out}.merged -t ${flash_thread} ${read_a} ${read_b}
     }
   output {
-    File out="${id_out}.merged.extendedFrags.fastq"
+    File out="${id_out}.merged.extendedFrags.fastq.gz"
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
