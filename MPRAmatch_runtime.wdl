@@ -128,15 +128,14 @@ workflow MPRAmatch {
 
 task Flash {
   # Flashing raw fastq files together
-  input {
-    File read_a
-    File read_b
-    Int read_len
-    Int frag_len
-    Int flash_thread
-    String id_out
-    String docker_tag
-  }
+  File read_a
+  File read_b
+  Int read_len
+  Int frag_len
+  Int flash_thread
+  String id_out
+  String docker_tag
+  
   parameter_meta {
     read_a: {
       description: "read1 fastq file from sequencer",
