@@ -145,7 +145,7 @@ task Flash {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "90G"
     cpu: 32
-    disk: "local-disk 700 SSD"
+    disks: "local-disk 70 SSD"
     }
   }
 task Pull_Barcodes {
@@ -171,7 +171,7 @@ task Pull_Barcodes {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disks: "local-disk 50 SSD"
     }
   }
 task Rearrange {
@@ -189,7 +189,7 @@ task Rearrange {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task MiniMap {
@@ -212,7 +212,7 @@ task MiniMap {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
     cpu: 32
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task SAM2MPRA {
@@ -229,7 +229,7 @@ task SAM2MPRA {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task Sort {
@@ -246,7 +246,7 @@ task Sort {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task Ct_Seq {
@@ -263,7 +263,7 @@ task Ct_Seq {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task Parse {
@@ -283,7 +283,7 @@ task Parse {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 
@@ -305,7 +305,7 @@ task Parse_sat_mut {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task qc_plot_t {
@@ -325,7 +325,7 @@ task qc_plot_t {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
   }
 task preseq {
@@ -344,7 +344,7 @@ task preseq {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 500 HDD"
+    disk: "local-disk 50 SSD"
     }
  }
 #task relocate{
