@@ -138,12 +138,12 @@ task Flash {
   
   parameter_meta {
     read_a: {
-      description: "read1 fastq file from sequencer",
-      localization_optional: true
+      "description": "read1 fastq file from sequencer",
+      "localization_optional": true
     }
     read_b: {
-      description: "read2 fastq file from sequencer",
-      localization_optional: true
+      "description": "read2 fastq file from sequencer",
+      "localization_optional": true
     }
   }
   command {
