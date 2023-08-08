@@ -135,17 +135,6 @@ task Flash {
   Int flash_thread
   String id_out
   String docker_tag
-  
-  parameter_meta {
-    read_a: {
-      "description": "read1 fastq file from sequencer",
-      "localization_optional": true
-    }
-    read_b: {
-      "description": "read2 fastq file from sequencer",
-      "localization_optional": true
-    }
-  }
   command {
     flash2 -r ${read_len} -f ${frag_len} -s 25 -o ${id_out}.merged -t ${flash_thread} ${read_a} ${read_b}
     }
@@ -156,7 +145,7 @@ task Flash {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "90G"
     cpu: 32
-    disks: "local-disk 70 SSD"
+    disks: "local-disk 100 SSD"
     }
   }
 task Pull_Barcodes {
