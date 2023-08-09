@@ -162,7 +162,7 @@ task Pull_Barcodes {
   Int enh_max
   Int bc_len
   command {
-    perl /scripts/pull_barcodes.pl ${merged_fastq} ${read_number} ${id_out}.merged ${barcode_link} ${oligo_link} ${end_oligo_link} ${seq_min} ${enh_min} ${enh_max} ${bc_len}
+    gzip -dc ${merged_fastq) | perl /scripts/pull_barcodes.pl - ${read_number} ${id_out}.merged ${barcode_link} ${oligo_link} ${end_oligo_link} ${seq_min} ${enh_min} ${enh_max} ${bc_len}
     }
   output {
     File out1="${id_out}.merged.match"
