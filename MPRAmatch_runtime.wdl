@@ -157,7 +157,6 @@ task Flash {
   Int frag_len
   Int flash_thread
   Int flash_disks
-  Int flash_mem
   String id_out
   String docker_tag
 
@@ -206,6 +205,7 @@ task Rearrange {
   File matched_barcodes
   String id_out
   String docker_tag
+  Int rearr_disks
   command <<<
     awk '{print ">"$1"#"$3"\n"$4}' ${matched_barcodes} | gzip - > ${id_out}.merged.match.enh.fa.gz
     >>>
@@ -215,7 +215,7 @@ task Rearrange {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${rearr_disks} + " SSD"
     }
   }
 task MiniMap {
@@ -223,6 +223,7 @@ task MiniMap {
   File reference_fasta
   File organized_fasta
   Int map_thread
+  Int map_disks
   String id_out
   String docker_tag
   command {
@@ -238,7 +239,7 @@ task MiniMap {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
     cpu: 32
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${map_disks} + " SSD"
     }
   }
 task SAM2MPRA {
@@ -246,6 +247,7 @@ task SAM2MPRA {
   File sam_file
   String docker_tag
   String id_out
+  Int sam2_disks
   command {
     perl /scripts/SAM2MPRA_cs.pl -C ${sam_file} ${id_out}.merged.match.enh.mapped
     }
@@ -255,12 +257,13 @@ task SAM2MPRA {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${sam2_disks} + " SSD"
     }
   }
 task Sort {
   File MPRA_out
   Int sort_mem
+  Int sort_disks
   String id_out
   String docker_tag
   command {
@@ -272,7 +275,7 @@ task Sort {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${sort_disks} + " SSD"
     }
   }
 task Ct_Seq {
@@ -280,6 +283,7 @@ task Ct_Seq {
   File sorted
   String docker_tag
   String id_out
+  Int ct_disks
   command {
     perl /scripts/Ct_seq.pl ${sorted} 2 4 > ${id_out}.merged.match.enh.mapped.barcode.ct
     }
@@ -289,7 +293,7 @@ task Ct_Seq {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${ct_disks} + " SSD"
     }
   }
 task Parse {
@@ -297,6 +301,7 @@ task Parse {
   File counted
   String docker_tag
   String id_out
+  Int parse_disks
   command <<<
     perl /scripts/parse_map.pl ${counted} > ${id_out}.merged.match.enh.mapped.barcode.ct.parsed
 
@@ -309,7 +314,7 @@ task Parse {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${parse_disks} + " SSD"
     }
   }
 
@@ -342,6 +347,7 @@ task qc_plot_t {
   File reference_fasta
   String docker_tag
   String id_out
+  Int qc_disks
   command {
     Rscript /scripts/mapping_QC_plots.R ${parsed} ${hist} ${preseq_out} ${preseq_in} ${reference_fasta} ${id_out}
     }
@@ -351,7 +357,7 @@ task qc_plot_t {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${qc_disks} + " SSD"
     }
   }
 task preseq {
@@ -359,6 +365,7 @@ task preseq {
   File counted
   String id_out
   String docker_tag
+  Int pre_disks
   command <<<
     awk '{ct[$4]++}END{for (i in ct)print i "\t" ct[i]}' ${counted} | sort -k1n > ${id_out}.merged.match.enh.mapped.barcode.ct.hist
     preseq lc_extrap -H ${id_out}.merged.match.enh.mapped.barcode.ct.hist -o ${id_out}.merged.match.enh.mapped.barcode.ct.hist.preseq -s 25000000 -n 1000 -e 1000000000
@@ -370,7 +377,7 @@ task preseq {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disk: "local-disk 50 SSD"
+    disk: "local-disk " + ${pre_disks} + " SSD"
     }
  }
 #task relocate{
