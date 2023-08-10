@@ -24,7 +24,7 @@ workflow MPRAmatch {
 
   Int disk_pad = 7
 
-  Int flash_disks = ceil(size(read_a, "GB") + size(read_b, "GB"))*1.5 + disk_pad
+  Int flash_disks = ceil(size(read_a, "GB")*1.5 + size(read_b, "GB")*1.5) + disk_pad
   Int pull_disks = ceil(4.25*size(Flash.out, "GB")) + disk_pad
   Int rearr_disks = ceil(1.5*size(Pull_Barcodes.out1, "GB")) + disk_pad
   Int map_disks = ceil(6.6*size(Rearrange.out, "GB")) + disk_pad
