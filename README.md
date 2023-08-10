@@ -5,3 +5,7 @@ A pipeline to go from raw paired end oligo nucleotide reads to an oligo-barcode 
 Find the docker image for this pipeline [here](quay.io/tewhey-lab/mpramatch) (currently only one tag)
 
 While we are still building this repo please find the original documentation for MPRAmatch [here](https://github.com/tewhey-lab/MPRA_oligo_barcode_pipeline)
+
+See our graphical pipeline below:
+
+![Graphical Pipeline](mpramatch_flowchart.png?raw=true "MPRAmatch Graphical Pipeline")
