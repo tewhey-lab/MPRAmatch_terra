@@ -22,6 +22,19 @@ workflow MPRAmatch {
   String? oligo_link = "AGTG" #4 base sequence on the oligo end of the link between the barcode and oligo - orientation barcode to oligo
   String? end_oligo_link = "CGTC" #4 base sequence at the very end of the oligo
 
+  Int disk_pad = 7
+
+  Int flash_disks = ceil(size(read_a, "GB") + size(read_b, "GB"))*1.5 + disk_pad
+  Int pull_disks = 4.25*size(Flash.out) + disk_pad
+  Int rearr_disks = 1.5*size(Pull_Barcodes.out1) + disk_pad
+  Int map_disks = 6.6*size(Rearrange.out) + disk_pad
+  Int sam2_disks = 1.9*size(MiniMap.out1) + disk_pad
+  Int sort_disks = 2*size(SAM2MPRA.out) + 0.5*disk_pad
+  Int ct_disks = size(Sort.out) + disk_pad
+  Int parse_disks = 2*size(Ct_Seq.out) + 0.5*disk_pad
+  Int qc_disks = disk_pad
+  Int pre_disks = disk_pad
+
   call Flash { input:
                   read_a=read_a,
                   read_b=read_b,
@@ -29,7 +42,8 @@ workflow MPRAmatch {
                   read_len=read_len,
                   frag_len=frag_len,
                   id_out=id_out,
-                  docker_tag=docker_tag
+                  docker_tag=docker_tag,
+                  flash_disks=flash_disks
                 }
   call Pull_Barcodes { input:
                           #pull = pull,
@@ -43,37 +57,43 @@ workflow MPRAmatch {
                           enh_max=enh_max,
                           bc_len=bc_len,
                           oligo_link=oligo_link,
-                          end_oligo_link=end_oligo_link
+                          end_oligo_link=end_oligo_link,
+                          pull_disks=pull_disks
                         }
   call Rearrange { input:
                       matched_barcodes=Pull_Barcodes.out1,
                       id_out=id_out,
-                      docker_tag=docker_tag
+                      docker_tag=docker_tag,
+                      rearr_disks=rearr_disks
                     }
   call MiniMap { input:
                     reference_fasta=reference_fasta,
                     organized_fasta=Rearrange.out,
                     map_thread=thread,
                     id_out=id_out,
-                    docker_tag=docker_tag
+                    docker_tag=docker_tag,
+                    map_disks=map_disks
                   }
   call SAM2MPRA { input:
                       #sam=sam,
                       docker_tag=docker_tag,
                       sam_file=MiniMap.out1,
-                      id_out=id_out
+                      id_out=id_out,
+                      sam2_disks=sam2_disks
                     }
   call Sort { input:
                   MPRA_out=SAM2MPRA.out,
                   sort_mem=mem,
                   id_out=id_out,
-                  docker_tag=docker_tag
+                  docker_tag=docker_tag,
+                  sort_disks=sort_disks
                 }
   call Ct_Seq { input:
                     #count=count,
                     docker_tag=docker_tag,
                     sorted=Sort.out,
-                    id_out=id_out
+                    id_out=id_out,
+                    ct_disks=ct_disks
                   }
   if (defined(attributes)) {
     call Parse_sat_mut { input:
@@ -89,14 +109,16 @@ workflow MPRAmatch {
                   #  parse=parse,
                     docker_tag=docker_tag,
                     counted=Ct_Seq.out,
-                    id_out=id_out
+                    id_out=id_out,
+                    parse_disks=parse_disks
                   }
   }
 
   call preseq { input:
                  counted=Ct_Seq.out,
                  id_out=id_out,
-                 docker_tag=docker_tag
+                 docker_tag=docker_tag,
+                 pre_disks=pre_disks
               }
   call qc_plot_t { input:
                     parsed=Parse.out_parsed,
@@ -105,7 +127,8 @@ workflow MPRAmatch {
                     preseq_in=preseq.hist,
                     reference_fasta=reference_fasta,
                     docker_tag=docker_tag,
-                    id_out=id_out
+                    id_out=id_out,
+                    qc_disks=qc_disks
               }
   #call relocate { input:
   #                  flashed=Flash.out,
@@ -133,8 +156,11 @@ task Flash {
   Int read_len
   Int frag_len
   Int flash_thread
+  Int flash_disks
+  Int flash_mem
   String id_out
   String docker_tag
+
   command {
     flash2 -z -r ${read_len} -f ${frag_len} -s 25 -o ${id_out}.merged -t ${flash_thread} ${read_a} ${read_b}
     }
@@ -143,9 +169,9 @@ task Flash {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
-    memory: "90G"
+    memory: "4G"
     cpu: 32
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + ${flash_disks} + " SSD"
     }
   }
 task Pull_Barcodes {
@@ -161,6 +187,7 @@ task Pull_Barcodes {
   Int enh_min
   Int enh_max
   Int bc_len
+  Int pull_disks
   command <<<
     gzip -dc ${merged_fastq} | perl /scripts/pull_barcodes.pl - ${read_number} ${id_out}.merged ${barcode_link} ${oligo_link} ${end_oligo_link} ${seq_min} ${enh_min} ${enh_max} ${bc_len}
     >>>
@@ -171,7 +198,7 @@ task Pull_Barcodes {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "3000 MB"
-    disks: "local-disk 50 SSD"
+    disks: "local-disk " + ${pull_disks} + " SSD"
     }
   }
 task Rearrange {
@@ -180,8 +207,7 @@ task Rearrange {
   String id_out
   String docker_tag
   command <<<
-    awk '{print ">"$1"#"$3"\n"$4}' ${matched_barcodes} > ${id_out}.merged.match.enh.fa
-    gzip ${id_out}.merged.match.enh.fa
+    awk '{print ">"$1"#"$3"\n"$4}' ${matched_barcodes} | gzip - > ${id_out}.merged.match.enh.fa.gz
     >>>
   output {
     File out="${id_out}.merged.match.enh.fa.gz"
