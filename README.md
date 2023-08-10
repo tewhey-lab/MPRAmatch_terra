@@ -8,4 +8,4 @@ While we are still building this repo please find the original documentation for
 
 See our graphical pipeline below:
 
-![Graphical Pipeline](mpramatch_flowchart.png?raw=true "MPRAmatch Graphical Pipeline")
+![Graphical Pipeline](mpra_match_flowchart.png?raw=true "MPRAmatch Graphical Pipeline")
