@@ -25,13 +25,13 @@ workflow MPRAmatch {
   Int disk_pad = 7
 
   Int flash_disks = ceil(size(read_a, "GB") + size(read_b, "GB"))*1.5 + disk_pad
-  Int pull_disks = 4.25*size(Flash.out) + disk_pad
-  Int rearr_disks = 1.5*size(Pull_Barcodes.out1) + disk_pad
-  Int map_disks = 6.6*size(Rearrange.out) + disk_pad
-  Int sam2_disks = 1.9*size(MiniMap.out1) + disk_pad
-  Int sort_disks = 2*size(SAM2MPRA.out) + 0.5*disk_pad
-  Int ct_disks = size(Sort.out) + disk_pad
-  Int parse_disks = 2*size(Ct_Seq.out) + 0.5*disk_pad
+  Int pull_disks = 4.25*size(Flash.out, "GB") + disk_pad
+  Int rearr_disks = 1.5*size(Pull_Barcodes.out1, "GB") + disk_pad
+  Int map_disks = 6.6*size(Rearrange.out, "GB") + disk_pad
+  Int sam2_disks = 1.9*size(MiniMap.out1, "GB") + disk_pad
+  Int sort_disks = 2*size(SAM2MPRA.out, "GB") + 0.5*disk_pad
+  Int ct_disks = size(Sort.out, "GB") + disk_pad
+  Int parse_disks = 2*size(Ct_Seq.out, "GB") + 0.5*disk_pad
   Int qc_disks = disk_pad
   Int pre_disks = disk_pad
 
