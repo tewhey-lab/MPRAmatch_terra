@@ -237,7 +237,7 @@ task MiniMap {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
-    memory: "3000 MB"
+    memory: "20G"
     cpu: 32
     disks: "local-disk ${map_disks} SSD"
     }
@@ -274,7 +274,7 @@ task Sort {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
-    memory: "3000 MB"
+    memory: "${sort_mem}G"
     disks: "local-disk ${sort_disks} SSD"
     }
   }
