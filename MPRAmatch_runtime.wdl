@@ -227,7 +227,7 @@ task MiniMap {
   String id_out
   String docker_tag
   command {
-    minimap2 --for-only -Y --secondary=no -m 10 -n 1 -t ${map_thread} --end-bonus 12 -O 5 -E 1 -k 10 -2K25m --eqx --cs=short -c -a ${reference_fasta} ${organized_fasta} > ${id_out}.merged.match.enh.sam 2> ${id_out}.merged.match.enh.log
+    minimap2 --for-only -Y --secondary=no -m 10 -n 1 -t ${map_thread} --end-bonus 12 -O 5 -E 1 -k 10 -2K25m --eqx --cs=short -c -a ${reference_fasta} ${organized_fasta} > ${id_out}.merged.match.enh.sam
     samtools view -S -b ${id_out}.merged.match.enh.sam > ${id_out}.merged.match.enh.bam
     }
   output {
