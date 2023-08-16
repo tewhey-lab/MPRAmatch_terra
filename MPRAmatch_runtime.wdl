@@ -232,7 +232,6 @@ task MiniMap {
     }
   output {
     File out1="${id_out}.merged.match.enh.sam"
-    File out2="${id_out}.merged.match.enh.log"
     File out3="${id_out}.merged.match.enh.bam"
     }
   runtime {
