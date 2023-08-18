@@ -255,7 +255,8 @@ task SAM2MPRA {
     }
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
-    memory: "3000 MB"
+    memory: "6G"
+    cpu: 8
     disks: "local-disk ${sam2_disks} SSD"
     }
   }
