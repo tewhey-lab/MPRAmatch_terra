@@ -265,7 +265,7 @@ task SAM2MPRA {
   }
 task Sort {
   File MPRA_out
-  Int sort_mem
+  Int mem
   Int sort_disks
   Int sort_mem
   String id_out
