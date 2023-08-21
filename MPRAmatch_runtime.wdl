@@ -362,6 +362,7 @@ task qc_plot_t {
   runtime {
     docker: "quay.io/tewhey-lab/mpramatch:${docker_tag}"
     memory: "6G"
+    cpu: 4
     disks: "local-disk ${qc_disks} SSD"
     }
   }
