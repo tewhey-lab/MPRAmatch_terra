@@ -29,7 +29,7 @@ workflow MPRAmatch {
   Int rearr_disks = ceil(1.5*size(Pull_Barcodes.out1, "GB")) + disk_pad
   Int map_disks = ceil(13*size(Rearrange.out, "GB")) + disk_pad
   Int sam2_disks = ceil(1.9*size(MiniMap.out1, "GB")) + disk_pad
-  Int sort_disks = ceil(2.5*size(SAM2MPRA.out, "GB")) + disk_pad
+  Int sort_disks = ceil(3.5*size(SAM2MPRA.out, "GB")) + disk_pad
   Int ct_disks = ceil(size(Sort.out, "GB")) + disk_pad
   Int parse_disks = ceil(2*size(Ct_Seq.out, "GB")) + ceil(0.5*disk_pad)
   Int qc_disks = disk_pad
