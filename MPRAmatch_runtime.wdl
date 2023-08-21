@@ -29,11 +29,13 @@ workflow MPRAmatch {
   Int rearr_disks = ceil(1.5*size(Pull_Barcodes.out1, "GB")) + disk_pad
   Int map_disks = ceil(13*size(Rearrange.out, "GB")) + disk_pad
   Int sam2_disks = ceil(1.9*size(MiniMap.out1, "GB")) + disk_pad
-  Int sort_disks = ceil(2*size(SAM2MPRA.out, "GB")) + ceil(0.5*disk_pad)
+  Int sort_disks = ceil(2*size(SAM2MPRA.out, "GB")) + disk_pad
   Int ct_disks = ceil(size(Sort.out, "GB")) + disk_pad
   Int parse_disks = ceil(2*size(Ct_Seq.out, "GB")) + ceil(0.5*disk_pad)
   Int qc_disks = disk_pad
   Int pre_disks = disk_pad
+
+  Int sort_mem = ceil(2*mem)
 
   call Flash { input:
                   read_a=read_a,
@@ -83,10 +85,11 @@ workflow MPRAmatch {
                     }
   call Sort { input:
                   MPRA_out=SAM2MPRA.out,
-                  sort_mem=mem,
+                  mem=mem,
                   id_out=id_out,
                   docker_tag=docker_tag,
-                  sort_disks=sort_disks
+                  sort_disks=sort_disks,
+                  sort_mem=sort_mem
                 }
   call Ct_Seq { input:
                     #count=count,
@@ -264,10 +267,11 @@ task Sort {
   File MPRA_out
   Int sort_mem
   Int sort_disks
+  Int sort_mem
   String id_out
   String docker_tag
   command {
-    sort -S${sort_mem}G -k2 ${MPRA_out} > ${id_out}.merged.match.enh.mapped.barcode.sort
+    sort -S${mem}G -k2 ${MPRA_out} > ${id_out}.merged.match.enh.mapped.barcode.sort
     }
   output {
     File out="${id_out}.merged.match.enh.mapped.barcode.sort"
